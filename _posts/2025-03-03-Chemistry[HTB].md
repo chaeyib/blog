@@ -2,20 +2,18 @@
 title: Chemistry - HTB
 date: 2025-03-03 11:37:57 +0530
 categories: [HTB, Linux]
-tags: [htb,linux,easy]     # TAG names should always be lowercase
+tags: [htb,linux,easy]
 ---
 
+## Overview
+Chemistry is an easy machine from Hack The Box which focuses on File Upload, Password Cracking and Privilege Escalation, all of which are based on publicly available exploits.
 
 ---
 - **IP:** 10.10.11.38
 - **OS:** Linux
 - **Difficulty:** Easy
 - **Link:** [Chemistry - Hack The Box](https://app.hackthebox.com/machines/Chemistry)
-- **Tools Used:** nmap, rustscan, netcat, pwncat, sqlite3, DB Browser for SQLite
-
----
-## Overview
-Chemistry is an easy machine from Hack The Box which focuses on File Upload, Password Cracking and Privilege Escalation, all of which are based on publicly available exploits.
+- **Tools Used:** nmap, rustscan, netcat, pwncat, sqlite3, DB Browser for SQLite, hashcat
 
 ---
 ## Enumeration
@@ -39,7 +37,7 @@ The website on port 5000 has two options - Login and Register.
 
 A dashboard is presented upon the registration of a new user at http://chemistry.htb:5000/dashboard .
 ![Dashboard](/assets/images/chemistry02.png){: w="700" h="400" }
-A File Upload functionality is observed on the dashboard, and takes files of .cif extension (Crystallographic Information File). A sample file is available and can be downloaded from the link in the web page.
+A File Upload functionality is observed on the dashboard, and takes files of *.cif* extension (Crystallographic Information File). A sample file is available and can be downloaded from the link in the web page.
 
 ---
 ## Exploitation
@@ -69,7 +67,7 @@ _space_group_magn.transform_BNS_Pp_abc  'a,b,[d for d in ().__class__.__mro__[1]
 _space_group_magn.number_BNS  62.448
 _space_group_magn.name_BNS  "P  n'  m  a'  "
 ```
-**Note:** Please change the <listener_ip> and <listener_port> according to your environment.
+**Note:** Please change the &lt;listener_ip&gt; and &lt;listener_port&gt; according to your environment.
 The payload was made with the help of https://www.revshells.com/ .
 
 A listener was set on the attacking machine using `pwncat -nvl <listener_port>`.
@@ -79,16 +77,16 @@ The file is uploaded upon which the web page presents two options for the file -
 Successful Reverse Shell
 ![Reverse Shell](/assets/images/chemistry04.png){: w="700" h="400" }
 ### User Flag
-Since an initial foothold is obtained with the user **app**, the next step is to examine notable files within the */home/app* directory. Analyzing the contents reveals two interesting files, *app.py*, and *database.db* file in the */home/app/instance* folder. Both of these files can be copied to the attacking machine by starting a Python HTTP Server on the target using `python3 -m http.server 9099`. The files are transferred by running `wget http://chemistry.htb:9099/app.py` and `wget http://chemistry.htb:9099/instance/database.db` on the attacking machine.
+Since an initial foothold is obtained with the user *app*, the next step is to examine notable files within the **/home/app** directory. Analyzing the contents reveals two interesting files, **app.py**, and **database.db** file in the **/home/app/instance** folder. Both of these files can be copied to the attacking machine by starting a Python HTTP Server on the target using `python3 -m http.server 9099`. The files are transferred by running `wget http://chemistry.htb:9099/app.py` and `wget http://chemistry.htb:9099/instance/database.db` on the attacking machine.
 
-*app.py* file is the Flask app that is running the Web Application on port 5000. The credentials for the database are available in *app.py* .
+**app.py** file is the Flask app that is running the Web Application on port 5000. The credentials for the database are available in **app.py** .
 ![Flask Credentials](/assets/images/chemistry05.png){: w="700" h="400" }
 
-The *app.py* also mentions the type of the hashing algorithm used to store the passwords, which is md5 in this case.  
+The **app.py** also mentions the type of the hashing algorithm used to store the passwords, which is md5 in this case.  
 ![Flask Passowrd](/assets/images/chemistry06.png){: w="700" h="400" }
 
-The *database.db* file is viewed with *DB Browser for SQLite* or *sqlite3* command line tool.
-The password for one of the users can be cracked using `hashcat -m 0 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt --force --potfile-disable --remove`, where *hashes.txt* contains all the md5 hashes from the database file separated by new-line.
+The **database.db** file is viewed with *DB Browser for SQLite* or `sqlite3`` command line tool.
+The password for one of the users can be cracked using `hashcat -m 0 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt`, where **hashes.txt** contains all the md5 hashes from the database file separated by new-line.
 One of the cracked password is used to logon to ssh and obtain the user flag.
 
 ---
@@ -99,7 +97,7 @@ LinPEAS is downloaded and run as the non-root user to check for Privilege Escala
 By connecting to this port from the target machine using `curl -vv http://127.0.0.1:8080`, it is observed that a Python server running *aiohttp version 3.9.1* is active.
 ![AIOHTTP](/assets/images/chemistry08.png){: w="700" h="400" }
 
-A search for **"aiohttp 3.9 vulnerabilities"** led to the discovery of an exploit for a Path Traversal Vulnerability [here](https://github.com/z3rObyte/CVE-2024-23334-PoC). Analyzing the output from the previous `curl` command revealed that stylesheets and JavaScript files were being loaded from the *assets* directory. The proof-of-concept (PoC) exploit was then modified accordingly to read the root flag file, and upon execution, it successfully retrieved the root flag.
+A search for "aiohttp 3.9 vulnerabilities" led to the discovery of an exploit for a Path Traversal Vulnerability [here](https://github.com/z3rObyte/CVE-2024-23334-PoC). Analyzing the output from the previous `curl` command revealed that stylesheets and JavaScript files were being loaded from the *assets* directory. The proof-of-concept (PoC) exploit was then modified accordingly to read the root flag file, and upon execution, it successfully retrieved the root flag.
 ```bash
 #!/bin/bash
 
@@ -146,7 +144,7 @@ done
 
 ```
 
-This key can be copied and stored in a file with the permissions `-rw-------` (600) and can be used to logon as root user on the target using `ssh root@chemistry.htb -i <root.key>`.
+This key can be copied and stored in a file with the permissions `-rw-------` (600) and can be used to logon as *root* user on the target using `ssh root@chemistry.htb -i <root.key>`.
 
 ---
 ## References
