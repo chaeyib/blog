@@ -152,6 +152,8 @@ paginate: 10
 # The base URL of your site
 baseurl: "/blog"
 
+encoding: "utf-8"
+
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:

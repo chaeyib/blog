@@ -37,6 +37,7 @@ The website on port 5000 has two options - Login and Register.
 
 A dashboard is presented upon the registration of a new user at http://chemistry.htb:5000/dashboard .
 ![Dashboard](/assets/images/chemistry02.png){: w="700" h="400" }
+
 A File Upload functionality is observed on the dashboard, and takes files of *.cif* extension (Crystallographic Information File). A sample file is available and can be downloaded from the link in the web page.
 
 ---
@@ -76,6 +77,7 @@ The file is uploaded upon which the web page presents two options for the file -
 
 Successful Reverse Shell
 ![Reverse Shell](/assets/images/chemistry04.png){: w="700" h="400" }
+
 ### User Flag
 Since an initial foothold is obtained with the user *app*, the next step is to examine notable files within the **/home/app** directory. Analyzing the contents reveals two interesting files, **app.py**, and **database.db** file in the **/home/app/instance** folder. Both of these files can be copied to the attacking machine by starting a Python HTTP Server on the target using `python3 -m http.server 9099`. The files are transferred by running `wget http://chemistry.htb:9099/app.py` and `wget http://chemistry.htb:9099/instance/database.db` on the attacking machine.
 
