@@ -87,7 +87,7 @@ Since an initial foothold is obtained with the user *app*, the next step is to e
 The **app.py** also mentions the type of the hashing algorithm used to store the passwords, which is md5 in this case.  
 ![Flask Passowrd](/assets/images/chemistry06.png){: w="700" h="400" }
 
-The **database.db** file is viewed with *DB Browser for SQLite* or `sqlite3`` command line tool.
+The **database.db** file is viewed with *DB Browser for SQLite* or `sqlite3` command line tool.
 The password for one of the users can be cracked using `hashcat -m 0 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt`, where **hashes.txt** contains all the md5 hashes from the database file separated by new-line.
 One of the cracked password is used to logon to ssh and obtain the user flag.
 
