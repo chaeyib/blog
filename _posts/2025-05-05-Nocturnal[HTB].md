@@ -11,7 +11,6 @@ tags: [htb,linux,easy]
 Nocturnal is an easy machine from Hack The Box. This is a Linux machine that focuses on Enumeration, Broken Access Control (OWASP Top 10 Web A01:2021), OS Command Injection (OWASP Top 10 Web A03:2021) and Privilege Escalation via Known Vulnerabilities and Exposure. 
 
 ---
-- **IP:** 10.10.11.62
 - **OS:** Linux
 - **Difficulty:** Easy
 - **Link:** [Nocturnal - Hack The Box](https://app.hackthebox.com/machines/nocturnal)

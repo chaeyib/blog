@@ -9,7 +9,6 @@ tags: [htb,linux,easy]
 Titanic is an easy machine from Hack The Box in the Week 6 of Season 7. This machine focuses on Local File Inclusion, Password Cracking and Privilege Escalation via writable files and an Arbitrary Code Execution vulnerability. 
 
 ---
-- **IP:** 10.10.11.55
 - **OS:** Linux
 - **Difficulty:** Easy
 - **Link:** [Titanic - Hack The Box](https://app.hackthebox.com/machines/titanic)

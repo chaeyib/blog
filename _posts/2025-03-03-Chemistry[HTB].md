@@ -9,7 +9,6 @@ tags: [htb,linux,easy]
 Chemistry is an easy machine from Hack The Box which focuses on File Upload, Password Cracking and Privilege Escalation, all of which are based on publicly available exploits.
 
 ---
-- **IP:** 10.10.11.38
 - **OS:** Linux
 - **Difficulty:** Easy
 - **Link:** [Chemistry - Hack The Box](https://app.hackthebox.com/machines/Chemistry)
