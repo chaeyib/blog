@@ -226,3 +226,8 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+html_proofer:
+  ignore_urls:
+    - /http:\/\/.*\.htb/
+  ignore_empty_alt: true
